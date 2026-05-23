@@ -20,10 +20,11 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('SoftOne.Web');
   });
 
-  it('should render title', () => {
+  it('should render the application shell', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, SoftOne.Web');
+    expect(compiled.querySelector('.dashboard-layout')).toBeTruthy();
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

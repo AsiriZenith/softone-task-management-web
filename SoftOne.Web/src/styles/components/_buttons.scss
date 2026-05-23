@@ -1,0 +1,32 @@
+@use '../abstracts' as *;
+
+.btn-rounded {
+  border-radius: $border-radius-pill !important;
+}
+
+.btn-accent {
+  background-color: $color-red-600 !important;
+  color: $color-white !important;
+
+  &:hover:not([disabled]) {
+    background-color: $color-red-700 !important;
+  }
+}
+
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button {
+  border-radius: $border-radius-md;
+  font-weight: $font-weight-medium;
+  letter-spacing: 0.02em;
+}
+
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary {
+  border-radius: $border-radius-md;
+}
+
+.mat-mdc-raised-button.mat-accent,
+.mat-mdc-unelevated-button.mat-accent {
+  border-radius: $border-radius-md;
+}

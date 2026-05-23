@@ -1,0 +1,45 @@
+@use '../abstracts' as *;
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+
+  @include respond-to(md) {
+    flex-direction: row;
+
+    .mat-mdc-form-field {
+      flex: 1;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-3;
+  margin-top: $spacing-4;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-form-field .mat-mdc-text-field-wrapper {
+  border-radius: $border-radius-md;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  margin-top: $spacing-1;
+}
+
+.mat-mdc-select-panel {
+  border-radius: $border-radius-md;
+}

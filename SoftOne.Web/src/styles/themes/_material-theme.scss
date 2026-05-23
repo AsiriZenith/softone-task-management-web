@@ -1,0 +1,76 @@
+@use '@angular/material' as mat;
+@use '../abstracts/variables' as vars;
+
+@include mat.core();
+
+$softone-primary-palette: (
+  50: vars.$color-burgundy-50,
+  100: vars.$color-burgundy-100,
+  200: vars.$color-burgundy-200,
+  300: vars.$color-burgundy-300,
+  400: vars.$color-burgundy-400,
+  500: vars.$color-burgundy-500,
+  600: vars.$color-burgundy-600,
+  700: vars.$color-burgundy-700,
+  800: vars.$color-burgundy-800,
+  900: vars.$color-burgundy-900,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$softone-accent-palette: (
+  50: vars.$color-red-50,
+  100: vars.$color-red-100,
+  200: vars.$color-red-200,
+  300: vars.$color-red-300,
+  400: vars.$color-red-400,
+  500: vars.$color-red-500,
+  600: vars.$color-red-600,
+  700: vars.$color-red-700,
+  800: vars.$color-red-800,
+  900: vars.$color-red-900,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$softone-warn-palette: mat.$orange-palette;
+
+$softone-primary: mat.define-palette($softone-primary-palette, 800, 300, 900);
+$softone-accent: mat.define-palette($softone-accent-palette, 600, 400, 800);
+$softone-warn: mat.define-palette($softone-warn-palette);
+
+$softone-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $softone-primary,
+      accent: $softone-accent,
+      warn: $softone-warn,
+    ),
+    typography: mat.define-typography-config(
+      $font-family: vars.$font-family-base,
+    ),
+    density: 0,
+  )
+);
+
+@include mat.all-component-themes($softone-theme);

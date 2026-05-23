@@ -1,0 +1,33 @@
+@use '../abstracts' as *;
+
+.app-toolbar {
+  background-color: $color-toolbar !important;
+  color: $color-toolbar-text !important;
+  box-shadow: $shadow-toolbar;
+  min-height: $toolbar-height;
+  padding: 0 $spacing-4;
+
+  .mat-toolbar-row,
+  .mat-toolbar-single-row {
+    height: $toolbar-height;
+  }
+}
+
+.app-toolbar__brand {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-medium;
+  letter-spacing: 0.02em;
+  color: $color-toolbar-text;
+}
+
+.app-toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  margin-left: auto;
+}
+
+.mat-toolbar.app-toolbar {
+  background-color: $color-toolbar;
+  color: $color-toolbar-text;
+}

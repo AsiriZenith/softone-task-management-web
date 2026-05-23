@@ -1,0 +1,26 @@
+@use '../abstracts' as *;
+
+.app-container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+}
+
+.app-container--fluid {
+  max-width: none;
+}
+
+.app-container--narrow {
+  max-width: 960px;
+}
+
+.page-content {
+  padding: $spacing-6 $container-padding;
+
+  @include respond-below(md) {
+    padding: $spacing-4 $container-padding;
+  }
+}

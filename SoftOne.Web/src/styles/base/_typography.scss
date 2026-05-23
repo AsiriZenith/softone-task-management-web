@@ -1,0 +1,66 @@
+@use '../abstracts' as *;
+
+h1,
+.h1 {
+  font-family: $font-family-heading;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-tight;
+  letter-spacing: -0.02em;
+}
+
+h2,
+.h2 {
+  font-family: $font-family-heading;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-tight;
+}
+
+h3,
+.h3 {
+  font-family: $font-family-heading;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-tight;
+}
+
+h4,
+.h4 {
+  font-family: $font-family-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-base;
+}
+
+.text-body {
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
+
+.text-body-sm {
+  font-size: $font-size-sm;
+  line-height: $line-height-base;
+}
+
+.text-caption {
+  font-size: $font-size-xs;
+  line-height: $line-height-base;
+  color: $color-text-secondary;
+}
+
+.text-secondary {
+  color: $color-text-secondary;
+}
+
+.text-on-dark {
+  color: $color-text-on-dark;
+}
+
+.font-medium {
+  font-weight: $font-weight-medium;
+}
+
+.font-semibold {
+  font-weight: $font-weight-semibold;
+}
