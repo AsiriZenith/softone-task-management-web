@@ -1,14 +1,11 @@
 import { Routes } from '@angular/router';
 
+import { authGuard } from './core/guards/auth.guard';
 import { LoginPageComponent } from './features/auth/login-page/login-page.component';
 import { TasksPageComponent } from './features/tasks/tasks-page/tasks-page.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
-/**
- * Application routes.
- * Auth guards can be added to `mainLayoutRoutes` children in a future phase.
- */
 export const routes: Routes = [
   {
     path: 'login',
@@ -18,6 +15,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -28,7 +26,6 @@ export const routes: Routes = [
         path: 'tasks',
         component: TasksPageComponent,
         title: 'Tasks | SoftOne',
-        // canActivate: [authGuard] — future phase
       },
     ],
   },

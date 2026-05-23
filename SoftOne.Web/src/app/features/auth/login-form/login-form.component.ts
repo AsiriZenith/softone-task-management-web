@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
 
 import { AuthService } from '../../../core/services/auth.service';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-login-form',
@@ -28,10 +29,12 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly notificationService = inject(NotificationService);
 
   readonly loginForm = this.formBuilder.nonNullable.group({
     username: ['', [Validators.required, Validators.minLength(2)]],
@@ -41,6 +44,18 @@ export class LoginFormComponent {
   isSubmitting = false;
   errorMessage: string | null = null;
   hidePassword = true;
+
+  ngOnInit(): void {
+    if (this.authService.validateSession()) {
+      void this.router.navigate(['/tasks']);
+      return;
+    }
+
+    const reason = this.route.snapshot.queryParamMap.get('reason');
+    if (reason === 'session-required') {
+      this.notificationService.showError('Please sign in to continue.');
+    }
+  }
 
   submit(): void {
     if (this.loginForm.invalid) {

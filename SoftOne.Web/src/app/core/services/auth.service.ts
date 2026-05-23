@@ -46,9 +46,32 @@ export class AuthService {
     this.authStateSubject.next(null);
   }
 
+  /** Clears session and auth state when the API returns 401 Unauthorized. */
+  handleUnauthorized(): void {
+    this.logout();
+  }
+
   restoreSession(): void {
     const session = this.sessionService.getSession();
     this.authStateSubject.next(session);
+  }
+
+  /**
+   * Validates encrypted session storage and synchronizes in-memory auth state.
+   * Clears invalid sessions automatically via SessionService.
+   */
+  validateSession(): boolean {
+    const session = this.sessionService.getSession();
+
+    if (!session) {
+      if (this.authStateSubject.value !== null) {
+        this.authStateSubject.next(null);
+      }
+      return false;
+    }
+
+    this.authStateSubject.next(session);
+    return true;
   }
 
   isAuthenticated(): boolean {
