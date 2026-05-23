@@ -1,0 +1,49 @@
+:host {
+  display: block;
+}
+
+.app-toolbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: inherit;
+  gap: 1rem;
+}
+
+.app-toolbar__brand-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.app-toolbar__logo {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.app-toolbar__subtitle {
+  margin-left: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.app-toolbar__logout {
+  color: inherit;
+
+  mat-icon {
+    margin-right: 0.25rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .app-toolbar__logout-label {
+    display: none;
+  }
+
+  .app-toolbar__logout mat-icon {
+    margin-right: 0;
+  }
+}
