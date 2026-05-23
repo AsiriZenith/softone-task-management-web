@@ -6,17 +6,22 @@
       <span class="app-toolbar__subtitle hide-mobile">Task Management</span>
     </div>
 
-    <div class="app-toolbar__actions">
-      <button
-        mat-button
-        type="button"
-        class="app-toolbar__logout"
-        disabled
-        aria-label="Logout (placeholder)"
-      >
-        <mat-icon aria-hidden="true">logout</mat-icon>
-        <span class="app-toolbar__logout-label">Logout</span>
-      </button>
-    </div>
+    @if (isAuthenticated$ | async) {
+      <div class="app-toolbar__actions">
+        @if (currentUsername$ | async; as username) {
+          <span class="app-toolbar__user hide-mobile">{{ username }}</span>
+        }
+        <button
+          mat-button
+          type="button"
+          class="app-toolbar__logout"
+          (click)="logout()"
+          aria-label="Logout"
+        >
+          <mat-icon aria-hidden="true">logout</mat-icon>
+          <span class="app-toolbar__logout-label">Logout</span>
+        </button>
+      </div>
+    }
   </div>
 </mat-toolbar>

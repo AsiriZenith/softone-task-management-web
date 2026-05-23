@@ -1,0 +1,63 @@
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+  @if (errorMessage) {
+    <div class="login-form__error" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <mat-form-field appearance="outline" class="login-form__field">
+    <mat-label>Username</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="username"
+      autocomplete="username"
+      [disabled]="isSubmitting"
+    />
+    @if (loginForm.controls.username.hasError('required') && loginForm.controls.username.touched) {
+      <mat-error>Username is required</mat-error>
+    }
+    @if (loginForm.controls.username.hasError('minlength') && loginForm.controls.username.touched) {
+      <mat-error>Username must be at least 2 characters</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="login-form__field">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      [type]="hidePassword ? 'password' : 'text'"
+      formControlName="password"
+      autocomplete="current-password"
+      [disabled]="isSubmitting"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="togglePasswordVisibility()"
+      [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'"
+      [disabled]="isSubmitting"
+    >
+      <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
+    @if (loginForm.controls.password.hasError('required') && loginForm.controls.password.touched) {
+      <mat-error>Password is required</mat-error>
+    }
+  </mat-form-field>
+
+  <button
+    mat-flat-button
+    color="primary"
+    type="submit"
+    class="login-form__submit btn-rounded"
+    [disabled]="isSubmitting"
+  >
+    @if (isSubmitting) {
+      <mat-spinner diameter="20" class="login-form__spinner" />
+      <span>Signing in...</span>
+    } @else {
+      <span>Sign In</span>
+    }
+  </button>
+</form>
