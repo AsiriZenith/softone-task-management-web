@@ -1,24 +1,34 @@
 <div class="tasks-page">
   <header class="tasks-page__header">
-    <h1 class="tasks-page__title">Task Dashboard</h1>
-    <p class="tasks-page__subtitle">
-      Manage tasks with a side-by-side list and form on desktop, stacked on mobile.
-    </p>
+    <div class="tasks-page__intro">
+      <h1 class="tasks-page__title">Task Dashboard</h1>
+      <p class="tasks-page__subtitle">
+        View, filter, and manage tasks. Create or edit tasks using the dialog workflow.
+      </p>
+    </div>
   </header>
 
-  <div class="tasks-page__dashboard dashboard-split">
-    <section
-      class="tasks-page__panel tasks-page__panel--list dashboard-split__panel dashboard-split__panel--list"
-      aria-label="Task list panel"
-    >
-      <app-task-list />
-    </section>
+  <section class="tasks-page__toolbar-section app-card" aria-label="Dashboard toolbar">
+    <div class="tasks-page__toolbar">
+      <app-task-toolbar class="tasks-page__toolbar-filters" />
+      <button
+        mat-flat-button
+        color="accent"
+        type="button"
+        class="tasks-page__create-btn btn-rounded"
+        (click)="onCreateTask()"
+      >
+        <mat-icon aria-hidden="true">add</mat-icon>
+        Create Task
+      </button>
+    </div>
+  </section>
 
-    <section
-      class="tasks-page__panel tasks-page__panel--form dashboard-split__panel dashboard-split__panel--form"
-      aria-label="Task form panel"
-    >
-      <app-task-form />
-    </section>
-  </div>
+  <section class="tasks-page__list-section" aria-label="Task list">
+    <app-task-list
+      (edit)="onEditTask($event)"
+      (complete)="onCompleteTask($event)"
+      (delete)="onDeleteTask($event)"
+    />
+  </section>
 </div>

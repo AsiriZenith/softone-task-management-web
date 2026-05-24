@@ -46,6 +46,12 @@
   border-radius: $border-radius-md;
 }
 
+.mat-mdc-snack-bar-container.snackbar-success {
+  --mdc-snackbar-container-color: #{$color-burgundy-700};
+  --mdc-snackbar-supporting-text-color: #{$color-white};
+  --mat-snack-bar-button-color: #{$color-white};
+}
+
 .mat-mdc-snack-bar-container.snackbar-error {
   --mdc-snackbar-container-color: #{$color-red-700};
   --mdc-snackbar-supporting-text-color: #{$color-white};

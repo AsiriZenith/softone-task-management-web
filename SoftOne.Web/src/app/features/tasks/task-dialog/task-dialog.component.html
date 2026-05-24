@@ -1,0 +1,95 @@
+<h2 mat-dialog-title class="task-dialog__title">
+  <mat-icon aria-hidden="true">{{ isCreateMode ? 'add_task' : 'edit' }}</mat-icon>
+  {{ dialogTitle }}
+</h2>
+
+<mat-dialog-content class="task-dialog__content">
+  <form class="task-dialog__form" [formGroup]="taskForm" novalidate>
+    <mat-form-field appearance="outline" class="task-dialog__field">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" autocomplete="off" />
+      @if (taskForm.controls.title.hasError('required') && taskForm.controls.title.touched) {
+        <mat-error>Title is required</mat-error>
+      }
+      @if (taskForm.controls.title.hasError('minlength') && taskForm.controls.title.touched) {
+        <mat-error>Title must be at least 2 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="task-dialog__field">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        rows="3"
+        autocomplete="off"
+      ></textarea>
+      @if (taskForm.controls.description.hasError('required') && taskForm.controls.description.touched) {
+        <mat-error>Description is required</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="task-dialog__row">
+      <mat-form-field appearance="outline" class="task-dialog__field">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          @for (priority of priorityOptions; track priority) {
+            <mat-option [value]="priority">{{ priority }}</mat-option>
+          }
+        </mat-select>
+        @if (taskForm.controls.priority.hasError('required') && taskForm.controls.priority.touched) {
+          <mat-error>Priority is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="task-dialog__field">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          @for (status of statusOptions; track status) {
+            <mat-option [value]="status">{{ status }}</mat-option>
+          }
+        </mat-select>
+        @if (taskForm.controls.status.hasError('required') && taskForm.controls.status.touched) {
+          <mat-error>Status is required</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="task-dialog__field">
+      <mat-label>Due Date</mat-label>
+      <input matInput [matDatepicker]="dueDatePicker" formControlName="dueDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="dueDatePicker" />
+      <mat-datepicker #dueDatePicker />
+      @if (taskForm.controls.dueDate.hasError('required') && taskForm.controls.dueDate.touched) {
+        <mat-error>Due date is required</mat-error>
+      }
+    </mat-form-field>
+
+    @if (taskForm.controls.status.value === 'Completed' || taskForm.controls.status.value === 'Rejected') {
+      <p class="task-dialog__hint" role="status">
+        Completed and Rejected tasks only allow status changes. Change status to an active state to edit other fields.
+      </p>
+    }
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="task-dialog__actions">
+  <button mat-button type="button" (click)="cancel()" [disabled]="isSubmitting">
+    Cancel
+  </button>
+  <button
+    mat-flat-button
+    color="accent"
+    type="button"
+    class="btn-rounded"
+    (click)="submit()"
+    [disabled]="isSubmitting"
+  >
+    @if (isSubmitting) {
+      <mat-spinner diameter="20" class="task-dialog__spinner" />
+      <span>Saving...</span>
+    } @else {
+      <span>{{ isCreateMode ? 'Create Task' : 'Save Changes' }}</span>
+    }
+  </button>
+</mat-dialog-actions>

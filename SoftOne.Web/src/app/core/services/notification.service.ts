@@ -17,4 +17,11 @@ export class NotificationService {
   showUnauthorized(): void {
     this.showError('Your session has expired. Please sign in again.');
   }
+
+  showSuccess(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: this.defaultDurationMs,
+      panelClass: ['snackbar-success'],
+    });
+  }
 }

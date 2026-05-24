@@ -1,0 +1,49 @@
+<article class="task-item">
+  <div class="task-item__content">
+    <div class="task-item__header">
+      <h3 class="task-item__title">{{ task().title }}</h3>
+      <span class="task-item__badge task-item__badge--priority">{{ task().priority }}</span>
+    </div>
+
+    <p class="task-item__description">{{ task().description }}</p>
+
+    <div class="task-item__meta">
+      <span class="task-item__badge task-item__badge--status">{{ task().status }}</span>
+      <span class="task-item__due">
+        <mat-icon aria-hidden="true">event</mat-icon>
+        {{ task().dueDate }}
+      </span>
+    </div>
+  </div>
+
+  <div class="task-item__actions" aria-label="Task actions">
+    <button
+      mat-icon-button
+      type="button"
+      matTooltip="Edit task"
+      aria-label="Edit task"
+      (click)="onEdit()"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      type="button"
+      matTooltip="Complete task"
+      aria-label="Complete task"
+      (click)="onComplete()"
+    >
+      <mat-icon>check_circle</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      type="button"
+      class="task-item__action--delete"
+      matTooltip="Delete task"
+      aria-label="Delete task"
+      (click)="onDelete()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</article>
