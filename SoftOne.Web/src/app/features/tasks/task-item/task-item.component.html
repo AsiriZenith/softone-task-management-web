@@ -1,52 +1,65 @@
-<article class="task-item">
+<article
+  class="task-item"
+  [class.task-item--completed]="isCompleted()"
+  [class.task-item--rejected]="isRejected()"
+  [class.task-item--terminal]="isTerminal()"
+>
   <div class="task-item__content">
-    <div class="task-item__header">
-      <h3 class="task-item__title">{{ task().title }}</h3>
-      <span class="task-item__badge task-item__badge--priority">{{ task().priority }}</span>
-    </div>
+    <h3 class="task-item__title">{{ task().title }}</h3>
 
-    <p class="task-item__description">{{ task().description }}</p>
+    @if (task().description) {
+      <p class="task-item__description">{{ task().description }}</p>
+    }
 
-    <div class="task-item__meta">
-      <span class="task-item__badge task-item__badge--status">{{ displayStatus() }}</span>
-      <span class="task-item__due">
+    <div class="task-item__meta" aria-label="Task metadata">
+      <app-task-status-chip [status]="task().status" />
+      <app-task-priority-chip [priority]="task().priority" />
+      <span class="task-item__due" [matTooltip]="formatDueDate(task().dueDate)">
         <mat-icon aria-hidden="true">event</mat-icon>
-        {{ formatDueDate(task().dueDate) }}
+        <span>{{ formatDueDate(task().dueDate) }}</span>
       </span>
     </div>
   </div>
 
   <div class="task-item__actions" aria-label="Task actions">
-    <button
-      mat-icon-button
-      type="button"
-      matTooltip="Edit task"
-      aria-label="Edit task"
-      [disabled]="actionsDisabled()"
-      (click)="onEdit()"
-    >
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      type="button"
-      matTooltip="Complete task"
-      aria-label="Complete task"
-      [disabled]="actionsDisabled() || task().isCompleted"
-      (click)="onComplete()"
-    >
-      <mat-icon>check_circle</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      type="button"
-      class="task-item__action--delete"
-      matTooltip="Delete task"
-      aria-label="Delete task"
-      [disabled]="actionsDisabled()"
-      (click)="onDelete()"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+    @if (isActing()) {
+      <mat-spinner
+        class="task-item__action-spinner"
+        diameter="24"
+        aria-label="Processing task"
+      />
+    } @else {
+      <button
+        mat-icon-button
+        type="button"
+        [matTooltip]="editTooltip()"
+        aria-label="Edit task"
+        [disabled]="actionsDisabled()"
+        (click)="onEdit()"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        type="button"
+        [matTooltip]="completeTooltip()"
+        aria-label="Mark as complete"
+        [disabled]="actionsDisabled() || isTerminal()"
+        (click)="onComplete()"
+      >
+        <mat-icon>check_circle</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        type="button"
+        class="task-item__action--delete"
+        matTooltip="Delete task"
+        aria-label="Delete task"
+        [disabled]="actionsDisabled()"
+        (click)="onDelete()"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    }
   </div>
 </article>

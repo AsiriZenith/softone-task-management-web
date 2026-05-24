@@ -1,0 +1,12 @@
+<mat-chip-set class="task-priority-chip-set" aria-label="Task priority">
+  <mat-chip
+    class="task-priority-chip"
+    [matTooltip]="'Priority: ' + priority()"
+    matTooltipPosition="above"
+  >
+    <mat-icon matChipAvatar class="task-priority-chip__icon" aria-hidden="true">
+      flag
+    </mat-icon>
+    {{ priority() }}
+  </mat-chip>
+</mat-chip-set>

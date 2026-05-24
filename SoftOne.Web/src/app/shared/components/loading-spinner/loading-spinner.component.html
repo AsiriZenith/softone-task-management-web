@@ -1,0 +1,12 @@
+<div
+  class="loading-spinner"
+  [class.loading-spinner--compact]="compact()"
+  role="status"
+  aria-live="polite"
+  [attr.aria-label]="message()"
+>
+  <mat-spinner [diameter]="diameter()" />
+  @if (message()) {
+    <span class="loading-spinner__message">{{ message() }}</span>
+  }
+</div>

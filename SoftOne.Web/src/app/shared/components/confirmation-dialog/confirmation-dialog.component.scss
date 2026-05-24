@@ -1,5 +1,60 @@
+@use 'styles/abstracts' as *;
+
+.confirmation-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-4;
+  padding: $spacing-5 $spacing-6 $spacing-2;
+}
+
+.confirmation-dialog__icon {
+  @include flex-center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: $border-radius-pill;
+  background: $color-burgundy-50;
+  color: $color-burgundy-600;
+
+  mat-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 1.5rem;
+  }
+}
+
+.confirmation-dialog__icon--destructive {
+  background: $color-red-50;
+  color: $color-red-700;
+}
+
+h2[mat-dialog-title] {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-medium;
+  color: $color-burgundy-800;
+  line-height: $line-height-tight;
+}
+
 .confirmation-dialog__message {
   margin: 0;
-  color: rgba(0, 0, 0, 0.7);
-  line-height: 1.5;
+  color: $color-text-secondary;
+  line-height: $line-height-base;
+}
+
+.confirmation-dialog__actions {
+  gap: $spacing-2;
+}
+
+@media (max-width: $breakpoint-sm - 1px) {
+  .confirmation-dialog__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
 }

@@ -2,7 +2,7 @@
   <mat-card-header class="task-list-panel__header">
     <mat-card-title>Your Tasks</mat-card-title>
     <mat-card-subtitle>
-      @if (loading()) {
+      @if (loading() && tasks().length === 0) {
         Loading tasks...
       } @else {
         {{ tasks().length }} {{ tasks().length === 1 ? 'task' : 'tasks' }}
@@ -12,24 +12,34 @@
 
   <mat-divider />
 
-  <mat-card-content class="task-list-panel__content">
-    @if (loading()) {
-      <div class="task-list-panel__loading" aria-live="polite">
-        <mat-spinner diameter="40" />
-        <span>Loading tasks...</span>
-      </div>
-    } @else if (tasks().length === 0) {
-      <div class="task-list-panel__empty">
-        <p>No tasks found.</p>
-        <p class="task-list-panel__empty-hint">Create a task to get started.</p>
-      </div>
+  <mat-card-content
+    class="task-list-panel__content"
+    [class.task-list-panel__content--loading]="loading() && tasks().length > 0"
+  >
+    @if (loading() && tasks().length === 0) {
+      <app-loading-spinner message="Loading tasks..." />
+    } @else if (!loading() && tasks().length === 0) {
+      <app-empty-state
+        [title]="emptyTitle()"
+        [hint]="emptyHint()"
+        [icon]="emptyIcon()"
+        [actionLabel]="showCreateAction() ? 'Create Task' : null"
+        (action)="createTask.emit()"
+      />
     } @else {
+      @if (loading()) {
+        <div class="task-list-panel__overlay" aria-hidden="true">
+          <app-loading-spinner message="Refreshing..." [compact]="true" />
+        </div>
+      }
+
       <ul class="task-list" role="list">
         @for (task of tasks(); track task.id) {
           <li class="task-list__item" role="listitem">
             <app-task-item
               [task]="task"
               [actionsDisabled]="actionsDisabled()"
+              [isActing]="actingTaskId() === task.id"
               (edit)="edit.emit($event)"
               (complete)="complete.emit($event)"
               (delete)="delete.emit($event)"

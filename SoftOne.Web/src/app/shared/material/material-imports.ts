@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 /**
@@ -27,6 +28,7 @@ export const MATERIAL_IMPORTS = [
   MatSnackBarModule,
   MatProgressSpinnerModule,
   MatDividerModule,
+  MatChipsModule,
   MatTooltipModule,
 ] as const;
 
@@ -42,5 +44,6 @@ export {
   MatSnackBarModule,
   MatProgressSpinnerModule,
   MatDividerModule,
+  MatChipsModule,
   MatTooltipModule,
 };

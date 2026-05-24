@@ -5,13 +5,14 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 import { ConfirmationDialogData } from './confirmation-dialog.model';
 
 @Component({
   selector: 'app-confirmation-dialog',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule],
+  imports: [MatDialogModule, MatButtonModule, MatIconModule],
   templateUrl: './confirmation-dialog.component.html',
   styleUrl: './confirmation-dialog.component.scss',
 })
@@ -25,6 +26,14 @@ export class ConfirmationDialogComponent {
 
   get cancelLabel(): string {
     return this.data.cancelLabel ?? 'Cancel';
+  }
+
+  get icon(): string {
+    return this.data.icon ?? 'warning_amber';
+  }
+
+  get isDestructive(): boolean {
+    return this.data.destructive ?? true;
   }
 
   confirm(): void {

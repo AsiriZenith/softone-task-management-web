@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
@@ -31,6 +31,7 @@ import {
 import {
   TASK_STATUS_OPTIONS,
   TaskStatus,
+  formatTaskStatusLabel,
   isLockedTaskStatus,
 } from '../../../shared/enums/task-status.enum';
 import {
@@ -66,6 +67,7 @@ const LOCKED_FIELDS: LockedFieldName[] = [
   styleUrl: './task-dialog.component.scss',
 })
 export class TaskDialogComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly formBuilder = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<TaskDialogComponent, TaskDialogResult>);
   private readonly taskService = inject(TaskService);
@@ -74,13 +76,15 @@ export class TaskDialogComponent implements OnInit {
 
   readonly priorityOptions = TASK_PRIORITY_OPTIONS;
   readonly statusOptions = TASK_STATUS_OPTIONS;
+  readonly formatTaskStatusLabel = formatTaskStatusLabel;
+  readonly TaskStatus = TaskStatus;
 
   readonly taskForm = this.formBuilder.nonNullable.group({
     title: ['', [Validators.required, Validators.minLength(2)]],
     description: ['', [Validators.required]],
     priority: [TaskPriority.Medium, Validators.required],
     dueDate: [null as Date | null, Validators.required],
-    status: [TaskStatus.Pending, Validators.required],
+    status: [TaskStatus.Todo, Validators.required],
   });
 
   isSubmitting = false;
@@ -100,7 +104,7 @@ export class TaskDialogComponent implements OnInit {
 
     this.applyFieldLock(this.taskForm.controls.status.value);
     this.taskForm.controls.status.valueChanges
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((status) => this.applyFieldLock(status));
   }
 
@@ -111,17 +115,22 @@ export class TaskDialogComponent implements OnInit {
     }
 
     this.isSubmitting = true;
+    this.setFormDisabled(true);
     const formValue = this.taskForm.getRawValue() as TaskFormValue;
-    const wasCompleted = this.data.task?.isCompleted ?? false;
+    const previousStatus =
+      this.data.task?.status ?? TaskStatus.Todo;
 
     this.taskService
       .saveTaskFromDialog(
         this.data.mode,
         this.data.task?.id ?? null,
         formValue,
-        wasCompleted
+        previousStatus
       )
-      .pipe(finalize(() => (this.isSubmitting = false)))
+      .pipe(finalize(() => {
+        this.isSubmitting = false;
+        this.setFormDisabled(false);
+      }))
       .subscribe({
         next: (task) => {
           this.dialogRef.close({
@@ -139,6 +148,15 @@ export class TaskDialogComponent implements OnInit {
 
   cancel(): void {
     this.dialogRef.close();
+  }
+
+  private setFormDisabled(disabled: boolean): void {
+    if (disabled) {
+      this.taskForm.disable({ emitEvent: false });
+    } else {
+      this.taskForm.enable({ emitEvent: false });
+      this.applyFieldLock(this.taskForm.controls.status.value);
+    }
   }
 
   private populateForm(task: NonNullable<TaskDialogData['task']>): void {
@@ -160,7 +178,7 @@ export class TaskDialogComponent implements OnInit {
     return Number.isNaN(parsed.getTime()) ? null : parsed;
   }
 
-  private applyFieldLock(status: string): void {
+  private applyFieldLock(status: TaskStatus): void {
     const locked = isLockedTaskStatus(status);
 
     for (const fieldName of LOCKED_FIELDS) {

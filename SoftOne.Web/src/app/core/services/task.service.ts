@@ -11,11 +11,18 @@ import {
   TaskResponseDto,
   UpdateTaskRequestDto,
 } from '../models/task.model';
+import { TaskQueryParams } from '../models/task-query.model';
+import { UpdateTaskStatusRequestDto } from '../models/update-task-status.model';
+import { TaskStatus } from '../../shared/enums/task-status.enum';
+import {
+  applyClientStatusFilter,
+  buildTaskHttpParams,
+} from '../utils/task-query.mapper';
 import {
   mapTaskFromDto,
   mapTaskToCreateRequest,
   mapTaskToUpdateRequest,
-  shouldCompleteAfterSave,
+  shouldUpdateStatusAfterSave,
 } from '../utils/task.mapper';
 
 @Injectable({ providedIn: 'root' })
@@ -23,11 +30,14 @@ export class TaskService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = `${environment.apiBaseUrl}/api/tasks`;
 
-  getTasks(): Observable<Task[]> {
+  getTasks(query: TaskQueryParams): Observable<Task[]> {
+    const params = buildTaskHttpParams(query);
+
     return this.http
-      .get<ApiSuccessResponse<TaskResponseDto[]>>(this.baseUrl)
+      .get<ApiSuccessResponse<TaskResponseDto[]>>(this.baseUrl, { params })
       .pipe(
         map((response) => response.data.map(mapTaskFromDto)),
+        map((tasks) => applyClientStatusFilter(tasks, query.status)),
         catchError(this.handleError)
       );
   }
@@ -59,9 +69,15 @@ export class TaskService {
       );
   }
 
-  completeTask(id: number): Observable<Task> {
+  updateTaskStatus(
+    id: number,
+    request: UpdateTaskStatusRequestDto
+  ): Observable<Task> {
     return this.http
-      .patch<ApiSuccessResponse<TaskResponseDto>>(`${this.baseUrl}/${id}/complete`, null)
+      .patch<ApiSuccessResponse<TaskResponseDto>>(
+        `${this.baseUrl}/${id}/status`,
+        request
+      )
       .pipe(
         map((response) => mapTaskFromDto(response.data)),
         catchError(this.handleError)
@@ -78,13 +94,13 @@ export class TaskService {
     mode: 'create' | 'edit',
     taskId: number | null,
     form: TaskFormValue,
-    wasCompleted = false
+    previousStatus: TaskStatus = TaskStatus.Todo
   ): Observable<Task> {
     if (mode === 'create') {
       return this.createTask(mapTaskToCreateRequest(form)).pipe(
         switchMap((task) =>
-          shouldCompleteAfterSave(form.status, false)
-            ? this.completeTask(task.id)
+          shouldUpdateStatusAfterSave(form.status, TaskStatus.Todo)
+            ? this.updateTaskStatus(task.id, { status: form.status })
             : of(task)
         ),
         catchError(this.handleError)
@@ -97,8 +113,8 @@ export class TaskService {
 
     return this.updateTask(taskId, mapTaskToUpdateRequest(form)).pipe(
       switchMap((task) =>
-        shouldCompleteAfterSave(form.status, wasCompleted)
-          ? this.completeTask(task.id)
+        shouldUpdateStatusAfterSave(form.status, previousStatus)
+          ? this.updateTaskStatus(task.id, { status: form.status })
           : of(task)
       ),
       catchError(this.handleError)

@@ -1,10 +1,11 @@
 import { TaskPriority } from '../../shared/enums/task-priority.enum';
+import { TaskStatus } from '../../shared/enums/task-status.enum';
 
 export interface Task {
   id: number;
   title: string;
   description: string;
-  isCompleted: boolean;
+  status: TaskStatus;
   priority: TaskPriority;
   dueDate: string | null;
   createdAt: string;
@@ -15,7 +16,7 @@ export interface TaskResponseDto {
   id: number;
   title: string;
   description: string | null;
-  isCompleted: boolean;
+  status: TaskStatus | number | string;
   priority: number | string;
   dueDate: string | null;
   createdAt: string;
@@ -25,14 +26,14 @@ export interface TaskResponseDto {
 export interface CreateTaskRequestDto {
   title: string;
   description?: string | null;
-  priority?: number;
+  priority?: TaskPriority;
   dueDate?: string | null;
 }
 
 export interface UpdateTaskRequestDto {
   title: string;
   description?: string | null;
-  priority?: number;
+  priority?: TaskPriority;
   dueDate?: string | null;
 }
 
@@ -41,5 +42,5 @@ export interface TaskFormValue {
   description: string;
   priority: TaskPriority;
   dueDate: Date | null;
-  status: string;
+  status: TaskStatus;
 }

@@ -1,11 +1,17 @@
-<form class="login-form" [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+<form
+  class="login-form"
+  [formGroup]="loginForm"
+  (ngSubmit)="submit()"
+  novalidate
+  aria-label="Sign in form"
+>
   @if (errorMessage) {
     <div class="login-form__error" role="alert">
       {{ errorMessage }}
     </div>
   }
 
-  <mat-form-field appearance="outline" class="login-form__field">
+  <mat-form-field appearance="outline" class="login-form__field" subscriptSizing="dynamic">
     <mat-label>Username</mat-label>
     <input
       matInput
@@ -22,7 +28,7 @@
     }
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="login-form__field">
+  <mat-form-field appearance="outline" class="login-form__field" subscriptSizing="dynamic">
     <mat-label>Password</mat-label>
     <input
       matInput

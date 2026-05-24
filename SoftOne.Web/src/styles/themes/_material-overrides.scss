@@ -58,6 +58,12 @@
   --mat-snack-bar-button-color: #{$color-white};
 }
 
+.mat-mdc-snack-bar-container.snackbar-warning {
+  --mdc-snackbar-container-color: #{$color-burgundy-500};
+  --mdc-snackbar-supporting-text-color: #{$color-white};
+  --mat-snack-bar-button-color: #{$color-white};
+}
+
 // Buttons
 .mat-mdc-button,
 .mat-mdc-raised-button,
@@ -79,4 +85,68 @@
 // Tooltips
 .mat-mdc-tooltip {
   font-size: $font-size-sm;
+}
+
+// Dialogs
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: #{$border-radius-xl};
+  --mat-dialog-container-shape: #{$border-radius-xl};
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: $border-radius-xl !important;
+  overflow: hidden;
+  box-shadow: $shadow-lg;
+}
+
+.mat-mdc-dialog-container.task-dialog-panel,
+.mat-mdc-dialog-container.confirmation-dialog-panel {
+  .mat-mdc-dialog-title,
+  .mat-mdc-dialog-title::before {
+    display: block;
+    height: auto;
+  }
+
+  .mat-mdc-dialog-title {
+    padding: $spacing-5 $spacing-6 $spacing-4;
+    margin: 0;
+    border-bottom: 1px solid $color-gray-200;
+    color: $color-burgundy-800;
+    font-weight: $font-weight-medium;
+    box-sizing: border-box;
+  }
+
+  .mat-mdc-dialog-content {
+    padding: $spacing-5 $spacing-6;
+    color: $color-text-primary;
+    max-height: min(70vh, 640px);
+  }
+
+  .mat-mdc-dialog-actions {
+    padding: $spacing-4 $spacing-6 $spacing-5;
+    margin: 0;
+    border-top: 1px solid $color-gray-200;
+    min-height: auto;
+  }
+
+  .mat-mdc-form-field {
+    margin-bottom: $spacing-1;
+
+    .mdc-notched-outline__notch {
+      padding-top: 1px;
+    }
+  }
+}
+
+.mat-mdc-dialog-container.confirmation-dialog-panel {
+  .mat-mdc-dialog-title {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+// Task workflow chips
+.mat-mdc-chip.task-status-chip,
+.mat-mdc-chip.task-priority-chip {
+  border-radius: $border-radius-pill;
 }

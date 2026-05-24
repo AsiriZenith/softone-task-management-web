@@ -1,0 +1,26 @@
+@use 'styles/abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4;
+  padding: $spacing-8 $spacing-4;
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+}
+
+.loading-spinner--compact {
+  flex-direction: row;
+  padding: $spacing-2 0;
+  gap: $spacing-3;
+}
+
+.loading-spinner__message {
+  text-align: center;
+}

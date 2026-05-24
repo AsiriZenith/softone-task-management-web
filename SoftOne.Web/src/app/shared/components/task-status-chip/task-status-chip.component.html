@@ -1,0 +1,13 @@
+<mat-chip-set class="task-status-chip-set" aria-label="Task status">
+  <mat-chip
+    class="task-status-chip"
+    [class]="chipClass()"
+    [matTooltip]="label()"
+    matTooltipPosition="above"
+  >
+    <mat-icon matChipAvatar class="task-status-chip__icon" aria-hidden="true">
+      {{ icon() }}
+    </mat-icon>
+    {{ label() }}
+  </mat-chip>
+</mat-chip-set>

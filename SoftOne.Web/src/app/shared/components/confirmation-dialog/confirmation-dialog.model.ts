@@ -3,4 +3,6 @@ export interface ConfirmationDialogData {
   message: string;
   confirmLabel?: string;
   cancelLabel?: string;
+  icon?: string;
+  destructive?: boolean;
 }

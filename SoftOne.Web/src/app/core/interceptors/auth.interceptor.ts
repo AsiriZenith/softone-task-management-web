@@ -20,9 +20,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       })
     : req;
 
+  const isLoginRequest = req.url.includes('/api/auth/login');
+
   return next(request).pipe(
     catchError((error: unknown) => {
-      if (error instanceof HttpErrorResponse && error.status === 401) {
+      if (
+        error instanceof HttpErrorResponse &&
+        error.status === 401 &&
+        !isLoginRequest
+      ) {
         authService.handleUnauthorized();
         notificationService.showUnauthorized();
         void router.navigate(['/login']);

@@ -14,10 +14,12 @@ const PRIORITY_FROM_API: Record<number, TaskPriority> = {
   2: TaskPriority.High,
 };
 
-const PRIORITY_TO_API: Record<TaskPriority, number> = {
-  [TaskPriority.Low]: 0,
-  [TaskPriority.Medium]: 1,
-  [TaskPriority.High]: 2,
+const STATUS_FROM_API: Record<number, TaskStatus> = {
+  1: TaskStatus.Todo,
+  2: TaskStatus.InProgress,
+  3: TaskStatus.Waiting,
+  4: TaskStatus.Completed,
+  5: TaskStatus.Rejected,
 };
 
 export function mapTaskFromDto(dto: TaskResponseDto): Task {
@@ -25,12 +27,29 @@ export function mapTaskFromDto(dto: TaskResponseDto): Task {
     id: dto.id,
     title: dto.title,
     description: dto.description ?? '',
-    isCompleted: dto.isCompleted,
+    status: mapStatusFromApi(dto.status),
     priority: mapPriorityFromApi(dto.priority),
     dueDate: dto.dueDate,
     createdAt: dto.createdAt,
     updatedAt: dto.updatedAt,
   };
+}
+
+export function mapStatusFromApi(value: number | string): TaskStatus {
+  if (typeof value === 'number') {
+    return STATUS_FROM_API[value] ?? TaskStatus.Todo;
+  }
+
+  const normalized = value.trim();
+  if (normalized === 'In Progress') {
+    return TaskStatus.InProgress;
+  }
+
+  const match = Object.values(TaskStatus).find(
+    (status) => status.toLowerCase() === normalized.toLowerCase()
+  );
+
+  return match ?? TaskStatus.Todo;
 }
 
 export function mapPriorityFromApi(value: number | string): TaskPriority {
@@ -44,8 +63,8 @@ export function mapPriorityFromApi(value: number | string): TaskPriority {
   return TaskPriority.Medium;
 }
 
-export function mapPriorityToApi(priority: TaskPriority): number {
-  return PRIORITY_TO_API[priority];
+export function mapPriorityToApi(priority: TaskPriority): TaskPriority {
+  return priority;
 }
 
 export function mapTaskToCreateRequest(form: TaskFormValue): CreateTaskRequestDto {
@@ -62,11 +81,7 @@ export function mapTaskToUpdateRequest(form: TaskFormValue): UpdateTaskRequestDt
 }
 
 export function mapTaskToFormStatus(task: Task): TaskStatus {
-  if (task.isCompleted) {
-    return TaskStatus.Completed;
-  }
-
-  return TaskStatus.Pending;
+  return task.status;
 }
 
 export function formatTaskDueDate(value: string | null): string {
@@ -86,9 +101,9 @@ export function formatTaskDueDate(value: string | null): string {
   });
 }
 
-export function shouldCompleteAfterSave(
-  formStatus: string,
-  wasCompleted: boolean
+export function shouldUpdateStatusAfterSave(
+  formStatus: TaskStatus,
+  previousStatus: TaskStatus
 ): boolean {
-  return formStatus === TaskStatus.Completed && !wasCompleted;
+  return formStatus !== previousStatus;
 }

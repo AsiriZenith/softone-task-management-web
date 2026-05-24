@@ -1,7 +1,9 @@
+@use 'styles/abstracts' as *;
+
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: $spacing-2;
 }
 
 .login-form__field {
@@ -9,29 +11,29 @@
 }
 
 .login-form__error {
-  margin-bottom: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  background-color: #ffebee;
-  color: #b71c1c;
-  font-size: 0.875rem;
-  line-height: 1.4;
+  margin-bottom: $spacing-3;
+  padding: $spacing-3 $spacing-4;
+  border-radius: $border-radius-md;
+  background-color: $color-red-50;
+  color: $color-red-700;
+  font-size: $font-size-sm;
+  line-height: $line-height-base;
 }
 
 .login-form__submit {
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: $spacing-2;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: $spacing-2;
 }
 
 .login-form__spinner {
   display: inline-block;
 
   ::ng-deep circle {
-    stroke: #ffffff;
+    stroke: $color-white;
   }
 }

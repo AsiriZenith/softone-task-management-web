@@ -25,7 +25,7 @@ export const routes: Routes = [
       {
         path: 'tasks',
         component: TasksPageComponent,
-        title: 'Tasks | SoftOne',
+        title: 'Task Management | SoftOne',
       },
     ],
   },

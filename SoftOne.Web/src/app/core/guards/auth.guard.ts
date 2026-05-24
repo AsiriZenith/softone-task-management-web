@@ -11,7 +11,5 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  return router.createUrlTree(['/login'], {
-    queryParams: { reason: 'session-required' },
-  });
+  return router.createUrlTree(['/login']);
 };

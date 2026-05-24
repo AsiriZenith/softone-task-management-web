@@ -10,7 +10,15 @@
 
   <section class="tasks-page__toolbar-section app-card" aria-label="Dashboard toolbar">
     <div class="tasks-page__toolbar">
-      <app-task-toolbar class="tasks-page__toolbar-filters" />
+      <app-task-toolbar
+        class="tasks-page__toolbar-filters"
+        [status]="query.status"
+        [priority]="query.priority"
+        [sortBy]="query.sortBy"
+        [sortDirection]="query.sortDirection"
+        [disabled]="isLoading || isActionInProgress"
+        (queryChange)="onQueryChange($event)"
+      />
       <button
         mat-flat-button
         color="accent"
@@ -30,9 +38,12 @@
       [tasks]="tasks"
       [loading]="isLoading"
       [actionsDisabled]="isActionInProgress"
+      [hasActiveFilters]="hasActiveFilters"
+      [actingTaskId]="actingTaskId"
       (edit)="onEditTask($event)"
       (complete)="onCompleteTask($event)"
       (delete)="onDeleteTask($event)"
+      (createTask)="onCreateTask()"
     />
   </section>
 </div>

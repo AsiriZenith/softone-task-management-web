@@ -1,11 +1,22 @@
 <h2 mat-dialog-title class="task-dialog__title">
-  <mat-icon aria-hidden="true">{{ isCreateMode ? 'add_task' : 'edit' }}</mat-icon>
+  <span class="task-dialog__title-icon" aria-hidden="true">
+    <mat-icon>{{ isCreateMode ? 'add_task' : 'edit' }}</mat-icon>
+  </span>
   {{ dialogTitle }}
 </h2>
 
 <mat-dialog-content class="task-dialog__content">
-  <form class="task-dialog__form" [formGroup]="taskForm" novalidate>
-    <mat-form-field appearance="outline" class="task-dialog__field">
+  <form
+    class="task-dialog__form"
+    [formGroup]="taskForm"
+    novalidate
+    [attr.aria-busy]="isSubmitting"
+  >
+    <mat-form-field
+      appearance="outline"
+      class="task-dialog__field"
+      subscriptSizing="dynamic"
+    >
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" autocomplete="off" />
       @if (taskForm.controls.title.hasError('required') && taskForm.controls.title.touched) {
@@ -16,7 +27,11 @@
       }
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="task-dialog__field">
+    <mat-form-field
+      appearance="outline"
+      class="task-dialog__field"
+      subscriptSizing="dynamic"
+    >
       <mat-label>Description</mat-label>
       <textarea
         matInput
@@ -30,7 +45,11 @@
     </mat-form-field>
 
     <div class="task-dialog__row">
-      <mat-form-field appearance="outline" class="task-dialog__field">
+      <mat-form-field
+        appearance="outline"
+        class="task-dialog__field"
+        subscriptSizing="dynamic"
+      >
         <mat-label>Priority</mat-label>
         <mat-select formControlName="priority">
           @for (priority of priorityOptions; track priority) {
@@ -42,11 +61,15 @@
         }
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="task-dialog__field">
+      <mat-form-field
+        appearance="outline"
+        class="task-dialog__field"
+        subscriptSizing="dynamic"
+      >
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
           @for (status of statusOptions; track status) {
-            <mat-option [value]="status">{{ status }}</mat-option>
+            <mat-option [value]="status">{{ formatTaskStatusLabel(status) }}</mat-option>
           }
         </mat-select>
         @if (taskForm.controls.status.hasError('required') && taskForm.controls.status.touched) {
@@ -55,7 +78,11 @@
       </mat-form-field>
     </div>
 
-    <mat-form-field appearance="outline" class="task-dialog__field">
+    <mat-form-field
+      appearance="outline"
+      class="task-dialog__field"
+      subscriptSizing="dynamic"
+    >
       <mat-label>Due Date</mat-label>
       <input matInput [matDatepicker]="dueDatePicker" formControlName="dueDate" />
       <mat-datepicker-toggle matIconSuffix [for]="dueDatePicker" />
@@ -65,7 +92,10 @@
       }
     </mat-form-field>
 
-    @if (taskForm.controls.status.value === 'Completed' || taskForm.controls.status.value === 'Rejected') {
+    @if (
+      taskForm.controls.status.value === TaskStatus.Completed ||
+      taskForm.controls.status.value === TaskStatus.Rejected
+    ) {
       <p class="task-dialog__hint" role="status">
         Completed and Rejected tasks only allow status changes. Change status to an active state to edit other fields.
       </p>

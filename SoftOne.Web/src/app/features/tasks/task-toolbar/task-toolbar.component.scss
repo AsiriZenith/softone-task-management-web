@@ -1,3 +1,5 @@
+@use 'styles/abstracts' as *;
+
 :host {
   display: block;
 }
@@ -5,26 +7,26 @@
 .task-toolbar {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $spacing-4;
   padding: 0;
 }
 
 .task-toolbar__group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: $spacing-2;
   min-width: 0;
 }
 
 .task-toolbar__heading {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-  font-weight: 600;
+  gap: $spacing-1;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #572429;
+  color: $color-burgundy-700;
 
   mat-icon {
     width: 1rem;
@@ -36,27 +38,83 @@
 .task-toolbar__controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: $spacing-3;
+  align-items: flex-end;
 }
 
-.task-toolbar__chip {
-  border-radius: 9999px;
-  font-size: 0.8125rem;
+.task-toolbar__controls--sort {
+  align-items: flex-end;
+}
+
+.task-toolbar__field {
+  min-width: 140px;
+  flex: 1 1 140px;
+  max-width: 200px;
+  margin-bottom: 0;
+
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      border-radius: $border-radius-md;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+}
+
+.task-toolbar__field--sort {
+  flex: 0 1 200px;
+}
+
+.task-toolbar__direction {
+  display: inline-flex;
+  align-self: flex-end;
+  height: 56px;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-bottom: 0;
+
+  ::ng-deep {
+    .mat-button-toggle {
+      height: 100%;
+      font-size: $font-size-sm;
+    }
+
+    .mat-button-toggle-button {
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  mat-icon {
+    width: 1rem;
+    height: 1rem;
+    font-size: 1rem;
+    margin-right: 0.125rem;
+  }
+}
+
+.task-toolbar__direction-label {
+  vertical-align: middle;
 }
 
 .task-toolbar__divider {
   display: none;
   align-self: stretch;
   height: auto;
-  min-height: 2.5rem;
+  min-height: 3.5rem;
 }
 
-@media (min-width: 768px) {
+@include respond-to(md) {
   .task-toolbar {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: $spacing-6;
   }
 
   .task-toolbar__group {
@@ -65,5 +123,25 @@
 
   .task-toolbar__divider {
     display: block;
+    margin-bottom: $spacing-1;
+  }
+}
+
+@include respond-below(sm) {
+  .task-toolbar__field {
+    max-width: none;
+    flex: 1 1 100%;
+  }
+
+  .task-toolbar__direction {
+    width: 100%;
+
+    .mat-button-toggle {
+      flex: 1;
+    }
+  }
+
+  .task-toolbar__direction-label {
+    display: none;
   }
 }

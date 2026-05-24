@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="SoftOne Task Management">
+  <rect width="32" height="32" rx="7" fill="#481e22"/>
+  <path
+    fill="#ffffff"
+    d="M9 9.5h14a1 1 0 0 1 1 1v1.2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-1.2a1 1 0 0 1 1-1zm0 6.8h9.2a1 1 0 0 1 1 1v1.2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-1.2a1 1 0 0 1 1-1zm0 6.8h12.4a1 1 0 0 1 1 1v1.2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-1.2a1 1 0 0 1 1-1z"
+  />
+  <path
+    fill="#d59faa"
+    d="M21.2 13.8 23 15.6l5.4-6.2 1.6 1.4-7 8-3.8-3.8z"
+  />
+</svg>

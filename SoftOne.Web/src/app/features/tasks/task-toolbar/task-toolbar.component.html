@@ -5,14 +5,31 @@
       Filters
     </span>
     <div class="task-toolbar__controls">
-      <button mat-stroked-button type="button" class="task-toolbar__chip" disabled>
-        Status
-        <mat-icon iconPositionEnd aria-hidden="true">arrow_drop_down</mat-icon>
-      </button>
-      <button mat-stroked-button type="button" class="task-toolbar__chip" disabled>
-        Priority
-        <mat-icon iconPositionEnd aria-hidden="true">arrow_drop_down</mat-icon>
-      </button>
+      <mat-form-field appearance="outline" class="task-toolbar__field" subscriptSizing="dynamic">
+        <mat-label>Status</mat-label>
+        <mat-select
+          [value]="status()"
+          [disabled]="disabled()"
+          (selectionChange)="onStatusChange($event.value)"
+        >
+          @for (option of statusOptions; track option.value) {
+            <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="task-toolbar__field" subscriptSizing="dynamic">
+        <mat-label>Priority</mat-label>
+        <mat-select
+          [value]="priority()"
+          [disabled]="disabled()"
+          (selectionChange)="onPriorityChange($event.value)"
+        >
+          @for (option of priorityOptions; track option.value) {
+            <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
 
@@ -23,15 +40,37 @@
       <mat-icon aria-hidden="true">sort</mat-icon>
       Sort
     </span>
-    <div class="task-toolbar__controls">
-      <button mat-stroked-button type="button" class="task-toolbar__chip" disabled>
-        Created Date
-        <mat-icon iconPositionEnd aria-hidden="true">arrow_drop_down</mat-icon>
-      </button>
-      <button mat-stroked-button type="button" class="task-toolbar__chip" disabled>
-        Due Date
-        <mat-icon iconPositionEnd aria-hidden="true">arrow_drop_down</mat-icon>
-      </button>
+    <div class="task-toolbar__controls task-toolbar__controls--sort">
+      <mat-form-field appearance="outline" class="task-toolbar__field task-toolbar__field--sort" subscriptSizing="dynamic">
+        <mat-label>Sort By</mat-label>
+        <mat-select
+          [value]="sortBy()"
+          [disabled]="disabled()"
+          (selectionChange)="onSortFieldChange($event.value)"
+        >
+          @for (option of sortFieldOptions; track option.value) {
+            <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-button-toggle-group
+        class="task-toolbar__direction"
+        [hideSingleSelectionIndicator]="true"
+        [value]="sortDirection()"
+        [disabled]="disabled()"
+        (change)="onSortDirectionChange($event.value)"
+        aria-label="Sort direction"
+      >
+        @for (option of sortDirectionOptions; track option.value) {
+          <mat-button-toggle [value]="option.value">
+            <mat-icon aria-hidden="true">
+              {{ option.value === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+            </mat-icon>
+            <span class="task-toolbar__direction-label">{{ option.label }}</span>
+          </mat-button-toggle>
+        }
+      </mat-button-toggle-group>
     </div>
   </div>
 </div>
