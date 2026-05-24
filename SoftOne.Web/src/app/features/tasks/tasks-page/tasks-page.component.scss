@@ -54,7 +54,14 @@
 }
 
 .tasks-page__list-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
   width: 100%;
+}
+
+.tasks-page__pagination {
+  margin-top: $spacing-1;
 }
 
 @include respond-to(md) {

@@ -54,14 +54,14 @@ export class LoginFormComponent implements OnInit {
       return;
     }
 
-    this.isSubmitting = true;
+    this.setSubmitting(true);
     this.errorMessage = null;
 
     const { username, password } = this.loginForm.getRawValue();
 
     this.authService
       .login({ username, password })
-      .pipe(finalize(() => (this.isSubmitting = false)))
+      .pipe(finalize(() => this.setSubmitting(false)))
       .subscribe({
         next: () => {
           void this.router.navigate(['/tasks']);
@@ -75,5 +75,15 @@ export class LoginFormComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.hidePassword = !this.hidePassword;
+  }
+
+  private setSubmitting(submitting: boolean): void {
+    this.isSubmitting = submitting;
+
+    if (submitting) {
+      this.loginForm.disable({ emitEvent: false });
+    } else {
+      this.loginForm.enable({ emitEvent: false });
+    }
   }
 }

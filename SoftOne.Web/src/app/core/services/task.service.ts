@@ -4,6 +4,7 @@ import { Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { ApiSuccessResponse } from '../models/api-response.model';
+import { PagedResponseDto, PagedTasksResult } from '../models/paged-response.model';
 import {
   CreateTaskRequestDto,
   Task,
@@ -11,14 +12,12 @@ import {
   TaskResponseDto,
   UpdateTaskRequestDto,
 } from '../models/task.model';
-import { TaskQueryParams } from '../models/task-query.model';
+import { TaskListQuery } from '../models/task-query.model';
 import { UpdateTaskStatusRequestDto } from '../models/update-task-status.model';
 import { TaskStatus } from '../../shared/enums/task-status.enum';
+import { buildTaskHttpParams } from '../utils/task-query.mapper';
 import {
-  applyClientStatusFilter,
-  buildTaskHttpParams,
-} from '../utils/task-query.mapper';
-import {
+  mapPagedTasksFromDto,
   mapTaskFromDto,
   mapTaskToCreateRequest,
   mapTaskToUpdateRequest,
@@ -30,14 +29,15 @@ export class TaskService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = `${environment.apiBaseUrl}/api/tasks`;
 
-  getTasks(query: TaskQueryParams): Observable<Task[]> {
+  getTasks(query: TaskListQuery): Observable<PagedTasksResult> {
     const params = buildTaskHttpParams(query);
 
     return this.http
-      .get<ApiSuccessResponse<TaskResponseDto[]>>(this.baseUrl, { params })
+      .get<ApiSuccessResponse<PagedResponseDto<TaskResponseDto>>>(this.baseUrl, {
+        params,
+      })
       .pipe(
-        map((response) => response.data.map(mapTaskFromDto)),
-        map((tasks) => applyClientStatusFilter(tasks, query.status)),
+        map((response) => mapPagedTasksFromDto(response.data, query.status)),
         catchError(this.handleError)
       );
   }

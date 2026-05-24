@@ -1,0 +1,103 @@
+@use 'styles/abstracts' as *;
+
+:host {
+  display: block;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  padding: $spacing-4 $spacing-5;
+  border: 1px solid $color-gray-200;
+  border-radius: $border-radius-lg;
+  background: $color-surface;
+  box-shadow: $shadow-sm;
+}
+
+.pagination__summary {
+  margin: 0;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-secondary;
+}
+
+.pagination__controls {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: $spacing-3;
+}
+
+.pagination__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2 $spacing-3;
+}
+
+.pagination__nav-btn {
+  min-height: 2.25rem;
+  font-weight: $font-weight-medium;
+
+  mat-icon {
+    font-size: 1.125rem;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+.pagination__page-indicator {
+  min-width: 6.5rem;
+  text-align: center;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-burgundy-800;
+}
+
+.pagination__page-size {
+  width: 100%;
+  margin: 0;
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+@include respond-to(md) {
+  .pagination {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-4;
+  }
+
+  .pagination__controls {
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-4;
+    flex-shrink: 0;
+  }
+
+  .pagination__page-size {
+    width: 7.5rem;
+  }
+}
+
+@include respond-below(sm) {
+  .pagination {
+    padding: $spacing-3 $spacing-4;
+  }
+
+  .pagination__nav-btn {
+    flex: 1 1 calc(50% - #{$spacing-2});
+    min-width: 0;
+  }
+
+  .pagination__page-indicator {
+    flex: 1 1 100%;
+    order: -1;
+    margin-bottom: $spacing-1;
+  }
+}

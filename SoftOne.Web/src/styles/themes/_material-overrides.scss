@@ -147,6 +147,7 @@
 
 // Task workflow chips
 .mat-mdc-chip.task-status-chip,
-.mat-mdc-chip.task-priority-chip {
+.mat-mdc-chip.task-priority-chip,
+.mat-mdc-chip.task-due-date-chip {
   border-radius: $border-radius-pill;
 }

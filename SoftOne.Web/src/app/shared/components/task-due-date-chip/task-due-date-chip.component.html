@@ -1,0 +1,14 @@
+<mat-chip-set class="task-due-date-chip-set" aria-label="Task due date">
+  <mat-chip
+    class="task-due-date-chip"
+    [class]="chipClass()"
+    [matTooltip]="tooltip()"
+    matTooltipPosition="above"
+    [attr.aria-label]="ariaLabel()"
+  >
+    <mat-icon matChipAvatar class="task-due-date-chip__icon" aria-hidden="true">
+      {{ icon() }}
+    </mat-icon>
+    {{ label() }}
+  </mat-chip>
+</mat-chip-set>

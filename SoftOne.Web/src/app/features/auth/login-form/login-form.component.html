@@ -18,7 +18,6 @@
       type="text"
       formControlName="username"
       autocomplete="username"
-      [disabled]="isSubmitting"
     />
     @if (loginForm.controls.username.hasError('required') && loginForm.controls.username.touched) {
       <mat-error>Username is required</mat-error>
@@ -35,7 +34,6 @@
       [type]="hidePassword ? 'password' : 'text'"
       formControlName="password"
       autocomplete="current-password"
-      [disabled]="isSubmitting"
     />
     <button
       mat-icon-button

@@ -5,8 +5,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { Task } from '../../../core/models/task.model';
-import { formatTaskDueDate } from '../../../core/utils/task.mapper';
 import { TaskPriorityChipComponent } from '../../../shared/components/task-priority-chip/task-priority-chip.component';
+import { TaskDueDateChipComponent } from '../../../shared/components/task-due-date-chip/task-due-date-chip.component';
 import { TaskStatusChipComponent } from '../../../shared/components/task-status-chip/task-status-chip.component';
 import { TaskStatus } from '../../../shared/enums/task-status.enum';
 import {
@@ -25,6 +25,7 @@ import {
     MatTooltipModule,
     TaskStatusChipComponent,
     TaskPriorityChipComponent,
+    TaskDueDateChipComponent,
   ],
   templateUrl: './task-item.component.html',
   styleUrl: './task-item.component.scss',
@@ -57,10 +58,6 @@ export class TaskItemComponent {
   readonly completeTooltip = computed(() =>
     getCompleteActionTooltip(this.task().status)
   );
-
-  formatDueDate(value: string | null): string {
-    return formatTaskDueDate(value);
-  }
 
   onEdit(): void {
     this.edit.emit(this.task());

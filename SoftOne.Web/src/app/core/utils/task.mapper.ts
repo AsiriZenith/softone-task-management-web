@@ -1,5 +1,7 @@
 import { TaskPriority } from '../../shared/enums/task-priority.enum';
 import { TaskStatus } from '../../shared/enums/task-status.enum';
+import { PagedResponseDto, PagedTasksResult } from '../models/paged-response.model';
+import { TaskStatusFilter } from '../models/task-query.model';
 import {
   CreateTaskRequestDto,
   Task,
@@ -7,6 +9,7 @@ import {
   TaskResponseDto,
   UpdateTaskRequestDto,
 } from '../models/task.model';
+import { applyClientStatusFilter } from './task-query.mapper';
 
 const PRIORITY_FROM_API: Record<number, TaskPriority> = {
   0: TaskPriority.Low,
@@ -21,6 +24,21 @@ const STATUS_FROM_API: Record<number, TaskStatus> = {
   4: TaskStatus.Completed,
   5: TaskStatus.Rejected,
 };
+
+export function mapPagedTasksFromDto(
+  dto: PagedResponseDto<TaskResponseDto>,
+  statusFilter: TaskStatusFilter
+): PagedTasksResult {
+  const items = dto.items.map(mapTaskFromDto);
+
+  return {
+    items: applyClientStatusFilter(items, statusFilter),
+    page: dto.page,
+    pageSize: dto.pageSize,
+    totalCount: dto.totalCount,
+    totalPages: dto.totalPages,
+  };
+}
 
 export function mapTaskFromDto(dto: TaskResponseDto): Task {
   return {

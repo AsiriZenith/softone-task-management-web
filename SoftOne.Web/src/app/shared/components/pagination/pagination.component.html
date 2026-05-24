@@ -1,0 +1,57 @@
+<nav class="pagination" aria-label="Task list pagination">
+  <p class="pagination__summary" [attr.aria-live]="disabled() ? 'off' : 'polite'">
+    {{ rangeLabel() }}
+  </p>
+
+  <div class="pagination__controls">
+    @if (showNavigation()) {
+      <div class="pagination__nav">
+        <button
+          mat-stroked-button
+          type="button"
+          class="pagination__nav-btn"
+          [disabled]="disabled() || !canGoPrevious()"
+          aria-label="Go to previous page"
+          (click)="onPrevious()"
+        >
+          <mat-icon aria-hidden="true">chevron_left</mat-icon>
+          Previous
+        </button>
+
+        <span class="pagination__page-indicator" aria-current="page">
+          {{ pageIndicator() }}
+        </span>
+
+        <button
+          mat-stroked-button
+          type="button"
+          class="pagination__nav-btn"
+          [disabled]="disabled() || !canGoNext()"
+          aria-label="Go to next page"
+          (click)="onNext()"
+        >
+          Next
+          <mat-icon aria-hidden="true">chevron_right</mat-icon>
+        </button>
+      </div>
+    }
+
+    <mat-form-field
+      class="pagination__page-size"
+      appearance="outline"
+      subscriptSizing="dynamic"
+    >
+      <mat-label>Per page</mat-label>
+      <mat-select
+        [value]="pageSize()"
+        [disabled]="disabled()"
+        aria-label="Tasks per page"
+        (valueChange)="onPageSizeChange($event)"
+      >
+        @for (size of pageSizeOptions(); track size) {
+          <mat-option [value]="size">{{ size }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</nav>

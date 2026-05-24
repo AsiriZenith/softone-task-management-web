@@ -13,6 +13,16 @@ export interface TaskQueryParams {
   sortDirection: SortDirection;
 }
 
+export interface TaskListQuery extends TaskQueryParams {
+  page: number;
+  pageSize: number;
+}
+
+export const DEFAULT_PAGE = 1;
+export const DEFAULT_PAGE_SIZE = 10;
+export const PAGE_SIZE_OPTIONS = [5, 10, 20] as const;
+export type PageSizeOption = (typeof PAGE_SIZE_OPTIONS)[number];
+
 export interface TaskFilterOption<T extends string> {
   value: T;
   label: string;
@@ -23,6 +33,12 @@ export const DEFAULT_TASK_QUERY: TaskQueryParams = {
   priority: 'all',
   sortBy: 'createdAt',
   sortDirection: 'desc',
+};
+
+export const DEFAULT_TASK_LIST_QUERY: TaskListQuery = {
+  ...DEFAULT_TASK_QUERY,
+  page: DEFAULT_PAGE,
+  pageSize: DEFAULT_PAGE_SIZE,
 };
 
 export const TASK_STATUS_FILTER_OPTIONS: TaskFilterOption<TaskStatusFilter>[] = [

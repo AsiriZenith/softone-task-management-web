@@ -45,5 +45,16 @@
       (delete)="onDeleteTask($event)"
       (createTask)="onCreateTask()"
     />
+
+    <app-pagination
+      class="tasks-page__pagination"
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      [totalCount]="totalCount"
+      [totalPages]="totalPages"
+      [disabled]="isLoading || isActionInProgress"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+    />
   </section>
 </div>

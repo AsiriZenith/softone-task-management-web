@@ -89,24 +89,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: $spacing-2 $spacing-3;
-}
-
-.task-item__due {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-1;
-  padding: 0.125rem $spacing-2;
-  font-size: $font-size-xs;
-  font-weight: $font-weight-medium;
-  color: $color-text-secondary;
-  white-space: nowrap;
-
-  mat-icon {
-    width: 0.875rem;
-    height: 0.875rem;
-    font-size: 0.875rem;
-    color: $color-burgundy-500;
-  }
+  margin-top: $spacing-1;
 }
 
 .task-item__actions {

@@ -14,10 +14,10 @@
     <div class="task-item__meta" aria-label="Task metadata">
       <app-task-status-chip [status]="task().status" />
       <app-task-priority-chip [priority]="task().priority" />
-      <span class="task-item__due" [matTooltip]="formatDueDate(task().dueDate)">
-        <mat-icon aria-hidden="true">event</mat-icon>
-        <span>{{ formatDueDate(task().dueDate) }}</span>
-      </span>
+      <app-task-due-date-chip
+        [dueDate]="task().dueDate"
+        [taskStatus]="task().status"
+      />
     </div>
   </div>
 

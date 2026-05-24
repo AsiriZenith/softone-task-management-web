@@ -5,7 +5,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { finalize } from 'rxjs';
 
 import { Task } from '../../../core/models/task.model';
+import { PagedTasksResult } from '../../../core/models/paged-response.model';
 import {
+  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
   DEFAULT_TASK_QUERY,
   TaskQueryParams,
   hasActiveTaskFilters,
@@ -15,6 +18,7 @@ import { TaskService } from '../../../core/services/task.service';
 import { TaskStatus } from '../../../shared/enums/task-status.enum';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogData } from '../../../shared/components/confirmation-dialog/confirmation-dialog.model';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { TaskDialogData, TaskDialogResult } from '../models/task-dialog.model';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 import { TaskListComponent } from '../task-list/task-list.component';
@@ -28,6 +32,7 @@ import { TaskToolbarComponent } from '../task-toolbar/task-toolbar.component';
     MatIconModule,
     TaskToolbarComponent,
     TaskListComponent,
+    PaginationComponent,
   ],
   templateUrl: './tasks-page.component.html',
   styleUrl: './tasks-page.component.scss',
@@ -42,6 +47,11 @@ export class TasksPageComponent implements OnInit {
   isActionInProgress = false;
   actingTaskId: number | null = null;
   query: TaskQueryParams = { ...DEFAULT_TASK_QUERY };
+
+  currentPage = DEFAULT_PAGE;
+  pageSize = DEFAULT_PAGE_SIZE;
+  totalCount = 0;
+  totalPages = 0;
 
   get hasActiveFilters(): boolean {
     return hasActiveTaskFilters(this.query);
@@ -151,25 +161,77 @@ export class TasksPageComponent implements OnInit {
 
   onQueryChange(partial: Partial<TaskQueryParams>): void {
     this.query = { ...this.query, ...partial };
+    this.currentPage = DEFAULT_PAGE;
+    this.loadTasks();
+  }
+
+  onPageChange(page: number): void {
+    if (page === this.currentPage) {
+      return;
+    }
+
+    this.currentPage = page;
+    this.loadTasks();
+  }
+
+  onPageSizeChange(pageSize: number): void {
+    if (pageSize === this.pageSize) {
+      return;
+    }
+
+    this.pageSize = pageSize;
+    this.currentPage = DEFAULT_PAGE;
     this.loadTasks();
   }
 
   loadTasks(): void {
     this.isLoading = true;
     this.taskService
-      .getTasks(this.query)
+      .getTasks({
+        ...this.query,
+        page: this.currentPage,
+        pageSize: this.pageSize,
+      })
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
-        next: (tasks) => {
-          this.tasks = tasks;
+        next: (result) => {
+          if (this.shouldReloadForPageBounds(result)) {
+            this.loadTasks();
+            return;
+          }
+
+          this.applyPagedResult(result);
         },
         error: (error: Error) => {
           this.tasks = [];
+          this.totalCount = 0;
+          this.totalPages = 0;
           this.notificationService.showError(
             error.message || 'Failed to load tasks.'
           );
         },
       });
+  }
+
+  private shouldReloadForPageBounds(result: PagedTasksResult): boolean {
+    if (result.totalCount === 0) {
+      return false;
+    }
+
+    if (this.currentPage > result.totalPages) {
+      this.currentPage = Math.max(DEFAULT_PAGE, result.totalPages);
+      return true;
+    }
+
+    return false;
+  }
+
+  private applyPagedResult(result: PagedTasksResult): void {
+    this.tasks = result.items;
+    this.currentPage = result.page;
+    this.pageSize = result.pageSize;
+    this.totalCount = result.totalCount;
+    this.totalPages = result.totalPages;
   }
 
   private openTaskDialog(data: TaskDialogData): void {

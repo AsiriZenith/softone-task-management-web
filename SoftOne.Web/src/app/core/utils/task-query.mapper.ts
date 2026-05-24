@@ -1,18 +1,17 @@
 import { HttpParams } from '@angular/common/http';
 
 import {
-  TaskQueryParams,
+  TaskListQuery,
   TaskStatusFilter,
 } from '../models/task-query.model';
 import { Task } from '../models/task.model';
 import { TaskStatus } from '../../shared/enums/task-status.enum';
 
-/**
- * Maps dashboard query state to backend `/api/tasks` query parameters.
- * List filtering by specific status still uses client-side refinement when needed.
- */
-export function buildTaskHttpParams(query: TaskQueryParams): HttpParams {
-  let params = new HttpParams().set('sortBy', query.sortBy);
+export function buildTaskHttpParams(query: TaskListQuery): HttpParams {
+  let params = new HttpParams()
+    .set('sortBy', query.sortBy)
+    .set('page', String(query.page))
+    .set('pageSize', String(query.pageSize));
 
   if (query.sortDirection === 'desc') {
     params = params.set('sortDirection', 'desc');
