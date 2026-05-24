@@ -1,34 +1,24 @@
 <div class="tasks-page">
   <header class="tasks-page__header">
-    <h1 class="h2">Tasks</h1>
-    <p class="text-body-sm text-secondary">
-      Dashboard layout foundation — task management features coming soon.
+    <h1 class="tasks-page__title">Task Dashboard</h1>
+    <p class="tasks-page__subtitle">
+      Manage tasks with a side-by-side list and form on desktop, stacked on mobile.
     </p>
   </header>
 
-  <div class="dashboard-split">
-    <section class="dashboard-split__panel dashboard-split__panel--list">
-      <mat-card class="app-card">
-        <mat-card-header>
-          <mat-card-title>Task List</mat-card-title>
-          <mat-card-subtitle>Filters, sorting, and list view</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p class="tasks-page__placeholder">Task list placeholder</p>
-        </mat-card-content>
-      </mat-card>
+  <div class="tasks-page__dashboard dashboard-split">
+    <section
+      class="tasks-page__panel tasks-page__panel--list dashboard-split__panel dashboard-split__panel--list"
+      aria-label="Task list panel"
+    >
+      <app-task-list />
     </section>
 
-    <section class="dashboard-split__panel dashboard-split__panel--form">
-      <mat-card class="app-card">
-        <mat-card-header>
-          <mat-card-title>Task Form</mat-card-title>
-          <mat-card-subtitle>Create and edit tasks</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p class="tasks-page__placeholder">Task form placeholder</p>
-        </mat-card-content>
-      </mat-card>
+    <section
+      class="tasks-page__panel tasks-page__panel--form dashboard-split__panel dashboard-split__panel--form"
+      aria-label="Task form panel"
+    >
+      <app-task-form />
     </section>
   </div>
 </div>

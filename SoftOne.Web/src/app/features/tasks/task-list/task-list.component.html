@@ -1,0 +1,31 @@
+<mat-card class="app-card task-list-panel">
+  <mat-card-header class="task-list-panel__header">
+    <mat-card-title>Tasks</mat-card-title>
+    <mat-card-subtitle>Select a task to edit or create a new one</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="task-list-panel__content">
+    <section class="task-list-panel__filters" aria-label="Filtering and sorting">
+      <app-task-toolbar />
+    </section>
+
+    <mat-divider />
+
+    <section class="task-list-panel__list" aria-label="Task list">
+      <ul class="task-list" role="list">
+        @for (task of placeholderTasks; track task.title) {
+          <li class="task-list__item" role="listitem">
+            <button type="button" class="task-list__item-button" disabled>
+              <span class="task-list__item-title">{{ task.title }}</span>
+              <span class="task-list__item-meta">{{ task.meta }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+
+      <p class="task-list-panel__placeholder">
+        Task list, filtering, and sorting logic will be implemented in a future phase.
+      </p>
+    </section>
+  </mat-card-content>
+</mat-card>

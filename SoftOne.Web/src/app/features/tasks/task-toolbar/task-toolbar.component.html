@@ -1,0 +1,37 @@
+<div class="task-toolbar" role="toolbar" aria-label="Task filters and sorting">
+  <div class="task-toolbar__group">
+    <span class="task-toolbar__heading">
+      <mat-icon aria-hidden="true">filter_list</mat-icon>
+      Filters
+    </span>
+    <div class="task-toolbar__controls">
+      <button mat-stroked-button type="button" class="task-toolbar__chip" disabled>
+        Status
+        <mat-icon iconPositionEnd aria-hidden="true">arrow_drop_down</mat-icon>
+      </button>
+      <button mat-stroked-button type="button" class="task-toolbar__chip" disabled>
+        Priority
+        <mat-icon iconPositionEnd aria-hidden="true">arrow_drop_down</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-divider class="task-toolbar__divider hide-mobile" [vertical]="true" />
+
+  <div class="task-toolbar__group">
+    <span class="task-toolbar__heading">
+      <mat-icon aria-hidden="true">sort</mat-icon>
+      Sort
+    </span>
+    <div class="task-toolbar__controls">
+      <button mat-stroked-button type="button" class="task-toolbar__chip" disabled>
+        Created Date
+        <mat-icon iconPositionEnd aria-hidden="true">arrow_drop_down</mat-icon>
+      </button>
+      <button mat-stroked-button type="button" class="task-toolbar__chip" disabled>
+        Due Date
+        <mat-icon iconPositionEnd aria-hidden="true">arrow_drop_down</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

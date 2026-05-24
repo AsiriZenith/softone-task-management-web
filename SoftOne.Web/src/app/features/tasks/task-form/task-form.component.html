@@ -1,0 +1,35 @@
+<mat-card class="app-card task-form-panel">
+  <mat-card-header class="task-form-panel__header">
+    <mat-card-title>Create / Edit Task</mat-card-title>
+    <mat-card-subtitle>Task details and actions</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-divider />
+
+  <mat-card-content class="task-form-panel__content">
+    <div class="task-form__fields">
+      @for (field of formFields; track field.label) {
+        <div class="task-form__field">
+          <label class="task-form__label">
+            <mat-icon aria-hidden="true">{{ field.icon }}</mat-icon>
+            {{ field.label }}
+          </label>
+          <div class="task-form__control-placeholder" aria-hidden="true"></div>
+        </div>
+      }
+    </div>
+
+    <p class="task-form-panel__placeholder">
+      Form fields and submission logic will be implemented in a future phase.
+    </p>
+  </mat-card-content>
+
+  <mat-divider />
+
+  <mat-card-actions class="task-form-panel__actions" align="end">
+    <button mat-stroked-button type="button" disabled>Cancel</button>
+    <button mat-flat-button color="accent" type="button" class="btn-rounded" disabled>
+      Save Task
+    </button>
+  </mat-card-actions>
+</mat-card>
