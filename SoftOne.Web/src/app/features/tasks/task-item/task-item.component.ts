@@ -3,7 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { TaskPlaceholder } from '../models/task-placeholder.model';
+import { Task } from '../../../core/models/task.model';
+import { formatTaskDueDate } from '../../../core/utils/task.mapper';
 
 @Component({
   selector: 'app-task-item',
@@ -13,11 +14,20 @@ import { TaskPlaceholder } from '../models/task-placeholder.model';
   styleUrl: './task-item.component.scss',
 })
 export class TaskItemComponent {
-  readonly task = input.required<TaskPlaceholder>();
+  readonly task = input.required<Task>();
+  readonly actionsDisabled = input(false);
 
-  readonly edit = output<TaskPlaceholder>();
-  readonly complete = output<TaskPlaceholder>();
-  readonly delete = output<TaskPlaceholder>();
+  readonly edit = output<Task>();
+  readonly complete = output<Task>();
+  readonly delete = output<Task>();
+
+  formatDueDate(value: string | null): string {
+    return formatTaskDueDate(value);
+  }
+
+  displayStatus(): string {
+    return this.task().isCompleted ? 'Completed' : 'Active';
+  }
 
   onEdit(): void {
     this.edit.emit(this.task());

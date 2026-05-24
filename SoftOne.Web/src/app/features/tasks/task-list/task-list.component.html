@@ -1,27 +1,42 @@
 <mat-card class="app-card task-list-panel">
   <mat-card-header class="task-list-panel__header">
     <mat-card-title>Your Tasks</mat-card-title>
-    <mat-card-subtitle>{{ tasks.length }} tasks displayed</mat-card-subtitle>
+    <mat-card-subtitle>
+      @if (loading()) {
+        Loading tasks...
+      } @else {
+        {{ tasks().length }} {{ tasks().length === 1 ? 'task' : 'tasks' }}
+      }
+    </mat-card-subtitle>
   </mat-card-header>
 
   <mat-divider />
 
   <mat-card-content class="task-list-panel__content">
-    <ul class="task-list" role="list">
-      @for (task of tasks; track task.id) {
-        <li class="task-list__item" role="listitem">
-          <app-task-item
-            [task]="task"
-            (edit)="edit.emit($event)"
-            (complete)="complete.emit($event)"
-            (delete)="delete.emit($event)"
-          />
-        </li>
-      }
-    </ul>
-
-    <p class="task-list-panel__placeholder">
-      Task actions are placeholders — dialog and API integration coming in a future phase.
-    </p>
+    @if (loading()) {
+      <div class="task-list-panel__loading" aria-live="polite">
+        <mat-spinner diameter="40" />
+        <span>Loading tasks...</span>
+      </div>
+    } @else if (tasks().length === 0) {
+      <div class="task-list-panel__empty">
+        <p>No tasks found.</p>
+        <p class="task-list-panel__empty-hint">Create a task to get started.</p>
+      </div>
+    } @else {
+      <ul class="task-list" role="list">
+        @for (task of tasks(); track task.id) {
+          <li class="task-list__item" role="listitem">
+            <app-task-item
+              [task]="task"
+              [actionsDisabled]="actionsDisabled()"
+              (edit)="edit.emit($event)"
+              (complete)="complete.emit($event)"
+              (delete)="delete.emit($event)"
+            />
+          </li>
+        }
+      </ul>
+    }
   </mat-card-content>
 </mat-card>

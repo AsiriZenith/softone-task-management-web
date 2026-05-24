@@ -8,10 +8,10 @@
     <p class="task-item__description">{{ task().description }}</p>
 
     <div class="task-item__meta">
-      <span class="task-item__badge task-item__badge--status">{{ task().status }}</span>
+      <span class="task-item__badge task-item__badge--status">{{ displayStatus() }}</span>
       <span class="task-item__due">
         <mat-icon aria-hidden="true">event</mat-icon>
-        {{ task().dueDate }}
+        {{ formatDueDate(task().dueDate) }}
       </span>
     </div>
   </div>
@@ -22,6 +22,7 @@
       type="button"
       matTooltip="Edit task"
       aria-label="Edit task"
+      [disabled]="actionsDisabled()"
       (click)="onEdit()"
     >
       <mat-icon>edit</mat-icon>
@@ -31,6 +32,7 @@
       type="button"
       matTooltip="Complete task"
       aria-label="Complete task"
+      [disabled]="actionsDisabled() || task().isCompleted"
       (click)="onComplete()"
     >
       <mat-icon>check_circle</mat-icon>
@@ -41,6 +43,7 @@
       class="task-item__action--delete"
       matTooltip="Delete task"
       aria-label="Delete task"
+      [disabled]="actionsDisabled()"
       (click)="onDelete()"
     >
       <mat-icon>delete</mat-icon>

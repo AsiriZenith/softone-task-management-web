@@ -1,19 +1,13 @@
-import { TaskPlaceholder } from './task-placeholder.model';
+import { Task } from '../../../core/models/task.model';
 
 export type TaskDialogMode = 'create' | 'edit';
 
 export interface TaskDialogData {
-  task: TaskPlaceholder | null;
+  task: Task | null;
   mode: TaskDialogMode;
 }
 
 export interface TaskDialogResult {
   mode: TaskDialogMode;
-  task: {
-    title: string;
-    description: string;
-    priority: string;
-    dueDate: Date | null;
-    status: string;
-  };
+  task: Task;
 }

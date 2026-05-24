@@ -16,6 +16,7 @@
         color="accent"
         type="button"
         class="tasks-page__create-btn btn-rounded"
+        [disabled]="isLoading || isActionInProgress"
         (click)="onCreateTask()"
       >
         <mat-icon aria-hidden="true">add</mat-icon>
@@ -26,6 +27,9 @@
 
   <section class="tasks-page__list-section" aria-label="Task list">
     <app-task-list
+      [tasks]="tasks"
+      [loading]="isLoading"
+      [actionsDisabled]="isActionInProgress"
       (edit)="onEditTask($event)"
       (complete)="onCompleteTask($event)"
       (delete)="onDeleteTask($event)"

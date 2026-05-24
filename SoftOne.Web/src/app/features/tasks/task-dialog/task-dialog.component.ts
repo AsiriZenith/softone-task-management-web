@@ -18,8 +18,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
-import { delay, finalize, of } from 'rxjs';
+import { finalize } from 'rxjs';
 
+import { TaskFormValue } from '../../../core/models/task.model';
+import { NotificationService } from '../../../core/services/notification.service';
+import { TaskService } from '../../../core/services/task.service';
+import { mapTaskToFormStatus } from '../../../core/utils/task.mapper';
 import {
   TASK_PRIORITY_OPTIONS,
   TaskPriority,
@@ -64,6 +68,8 @@ const LOCKED_FIELDS: LockedFieldName[] = [
 export class TaskDialogComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<TaskDialogComponent, TaskDialogResult>);
+  private readonly taskService = inject(TaskService);
+  private readonly notificationService = inject(NotificationService);
   readonly data = inject<TaskDialogData>(MAT_DIALOG_DATA);
 
   readonly priorityOptions = TASK_PRIORITY_OPTIONS;
@@ -105,18 +111,29 @@ export class TaskDialogComponent implements OnInit {
     }
 
     this.isSubmitting = true;
+    const formValue = this.taskForm.getRawValue() as TaskFormValue;
+    const wasCompleted = this.data.task?.isCompleted ?? false;
 
-    // Placeholder submission — API integration in Phase 7.
-    of(this.taskForm.getRawValue())
-      .pipe(
-        delay(400),
-        finalize(() => (this.isSubmitting = false))
+    this.taskService
+      .saveTaskFromDialog(
+        this.data.mode,
+        this.data.task?.id ?? null,
+        formValue,
+        wasCompleted
       )
-      .subscribe((values) => {
-        this.dialogRef.close({
-          mode: this.data.mode,
-          task: values,
-        });
+      .pipe(finalize(() => (this.isSubmitting = false)))
+      .subscribe({
+        next: (task) => {
+          this.dialogRef.close({
+            mode: this.data.mode,
+            task,
+          });
+        },
+        error: (error: Error) => {
+          this.notificationService.showError(
+            error.message || 'Failed to save task. Please try again.'
+          );
+        },
       });
   }
 
@@ -128,13 +145,17 @@ export class TaskDialogComponent implements OnInit {
     this.taskForm.patchValue({
       title: task.title,
       description: task.description,
-      priority: task.priority as TaskPriority,
+      priority: task.priority,
       dueDate: this.parseDueDate(task.dueDate),
-      status: task.status as TaskStatus,
+      status: mapTaskToFormStatus(task),
     });
   }
 
-  private parseDueDate(value: string): Date | null {
+  private parseDueDate(value: string | null): Date | null {
+    if (!value) {
+      return null;
+    }
+
     const parsed = new Date(value);
     return Number.isNaN(parsed.getTime()) ? null : parsed;
   }
