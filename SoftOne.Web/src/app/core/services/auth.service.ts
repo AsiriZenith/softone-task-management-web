@@ -63,7 +63,6 @@ export class AuthService {
     this.authStateSubject.next(null);
   }
 
-  /** Clears session and auth state when the API returns 401 Unauthorized. */
   handleUnauthorized(): void {
     this.logout();
   }
@@ -73,10 +72,6 @@ export class AuthService {
     this.authStateSubject.next(session);
   }
 
-  /**
-   * Validates encrypted session storage and synchronizes in-memory auth state.
-   * Clears invalid sessions automatically via SessionService.
-   */
   validateSession(): boolean {
     const session = this.sessionService.getSession();
 

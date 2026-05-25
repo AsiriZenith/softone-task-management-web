@@ -36,6 +36,7 @@
   <section class="tasks-page__list-section" aria-label="Task list">
     <app-task-list
       [tasks]="tasks"
+      [totalCount]="totalCount"
       [loading]="isLoading"
       [actionsDisabled]="isActionInProgress"
       [hasActiveFilters]="hasActiveFilters"

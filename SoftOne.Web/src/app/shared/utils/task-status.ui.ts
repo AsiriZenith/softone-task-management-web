@@ -30,12 +30,10 @@ const STATUS_CHIP_CLASSES: Record<TaskStatus, string> = {
   [TaskStatus.Rejected]: 'task-status-chip--rejected',
 };
 
-/** User-friendly display label (e.g. InProgress → "In Progress"). */
 export function getStatusLabel(status: TaskStatus): string {
   return formatTaskStatusLabel(status);
 }
 
-/** Workflow color token for styling. */
 export function getStatusColor(status: TaskStatus): TaskStatusColor {
   return STATUS_COLORS[status];
 }

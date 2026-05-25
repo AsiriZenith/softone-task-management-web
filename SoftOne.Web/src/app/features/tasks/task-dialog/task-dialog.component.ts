@@ -23,7 +23,10 @@ import { finalize } from 'rxjs';
 import { TaskFormValue } from '../../../core/models/task.model';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TaskService } from '../../../core/services/task.service';
-import { mapTaskToFormStatus } from '../../../core/utils/task.mapper';
+import {
+  mapTaskToFormStatus,
+  parseDateOnlyToLocalDate,
+} from '../../../core/utils/task.mapper';
 import {
   TASK_PRIORITY_OPTIONS,
   TaskPriority,
@@ -164,18 +167,9 @@ export class TaskDialogComponent implements OnInit {
       title: task.title,
       description: task.description,
       priority: task.priority,
-      dueDate: this.parseDueDate(task.dueDate),
+      dueDate: parseDateOnlyToLocalDate(task.dueDate),
       status: mapTaskToFormStatus(task),
     });
-  }
-
-  private parseDueDate(value: string | null): Date | null {
-    if (!value) {
-      return null;
-    }
-
-    const parsed = new Date(value);
-    return Number.isNaN(parsed.getTime()) ? null : parsed;
   }
 
   private applyFieldLock(status: TaskStatus): void {

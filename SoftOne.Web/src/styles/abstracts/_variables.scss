@@ -1,8 +1,3 @@
-// SoftOne design tokens — colors, spacing, typography, shadows, radii
-
-// ---------------------------------------------------------------------------
-// Color palette
-// ---------------------------------------------------------------------------
 $color-burgundy-50: #f5e8ea;
 $color-burgundy-100: #e6c5cb;
 $color-burgundy-200: #d59faa;
@@ -48,35 +43,29 @@ $color-surface: $color-white;
 $color-toolbar: $color-burgundy-800;
 $color-toolbar-text: $color-white;
 
-// ---------------------------------------------------------------------------
-// Spacing scale (4px base)
-// ---------------------------------------------------------------------------
 $spacing-unit: 4px;
 $spacing-0: 0;
-$spacing-1: $spacing-unit;       // 4px
-$spacing-2: $spacing-unit * 2;   // 8px
-$spacing-3: $spacing-unit * 3;   // 12px
-$spacing-4: $spacing-unit * 4;   // 16px
-$spacing-5: $spacing-unit * 5;   // 20px
-$spacing-6: $spacing-unit * 6;   // 24px
-$spacing-8: $spacing-unit * 8;   // 32px
-$spacing-10: $spacing-unit * 10; // 40px
-$spacing-12: $spacing-unit * 12; // 48px
-$spacing-16: $spacing-unit * 16; // 64px
+$spacing-1: $spacing-unit;
+$spacing-2: $spacing-unit * 2;
+$spacing-3: $spacing-unit * 3;
+$spacing-4: $spacing-unit * 4;
+$spacing-5: $spacing-unit * 5;
+$spacing-6: $spacing-unit * 6;
+$spacing-8: $spacing-unit * 8;
+$spacing-10: $spacing-unit * 10;
+$spacing-12: $spacing-unit * 12;
+$spacing-16: $spacing-unit * 16;
 
-// ---------------------------------------------------------------------------
-// Typography
-// ---------------------------------------------------------------------------
 $font-family-base: 'Roboto', 'Helvetica Neue', sans-serif;
 $font-family-heading: 'Roboto', 'Helvetica Neue', sans-serif;
 
-$font-size-xs: 0.75rem;   // 12px
-$font-size-sm: 0.875rem;  // 14px
-$font-size-base: 1rem;    // 16px
-$font-size-lg: 1.125rem;  // 18px
-$font-size-xl: 1.25rem;   // 20px
-$font-size-2xl: 1.5rem;   // 24px
-$font-size-3xl: 2rem;     // 32px
+$font-size-xs: 0.75rem;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+$font-size-2xl: 1.5rem;
+$font-size-3xl: 2rem;
 
 $font-weight-regular: 400;
 $font-weight-medium: 500;
@@ -87,16 +76,10 @@ $line-height-tight: 1.25;
 $line-height-base: 1.5;
 $line-height-relaxed: 1.75;
 
-// ---------------------------------------------------------------------------
-// Layout
-// ---------------------------------------------------------------------------
 $container-max-width: 1400px;
 $container-padding: $spacing-4;
 $toolbar-height: 64px;
 
-// ---------------------------------------------------------------------------
-// Borders & shadows
-// ---------------------------------------------------------------------------
 $border-radius-sm: 4px;
 $border-radius-md: 8px;
 $border-radius-lg: 12px;
@@ -108,8 +91,5 @@ $shadow-md: 0 2px 8px rgba($color-black, 0.1);
 $shadow-lg: 0 4px 16px rgba($color-black, 0.12);
 $shadow-toolbar: 0 2px 4px rgba($color-black, 0.2);
 
-// ---------------------------------------------------------------------------
-// Transitions
-// ---------------------------------------------------------------------------
 $transition-fast: 150ms ease;
 $transition-base: 250ms ease;

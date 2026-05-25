@@ -12,10 +12,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-/**
- * Centralized Angular Material module exports for standalone components.
- * Import individual modules or spread MATERIAL_IMPORTS in component imports.
- */
 export const MATERIAL_IMPORTS = [
   MatToolbarModule,
   MatButtonModule,

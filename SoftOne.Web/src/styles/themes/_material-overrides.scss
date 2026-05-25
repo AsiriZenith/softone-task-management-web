@@ -1,13 +1,11 @@
 @use '../abstracts' as *;
 
-// Toolbar
 .mat-toolbar.app-toolbar,
 .app-toolbar.mat-toolbar {
   --mat-toolbar-container-background-color: #{$color-toolbar};
   --mat-toolbar-container-text-color: #{$color-toolbar-text};
 }
 
-// Cards
 .mat-mdc-card {
   border-radius: $border-radius-lg;
   box-shadow: $shadow-md;
@@ -17,7 +15,6 @@
   padding: $spacing-4 $spacing-6;
 }
 
-// Form fields
 .mat-mdc-form-field {
   margin-bottom: $spacing-2;
 }
@@ -26,7 +23,6 @@
   --mdc-outlined-text-field-container-shape: #{$border-radius-md};
 }
 
-// Tables
 .mat-mdc-table {
   background-color: $color-surface;
   border-radius: $border-radius-md;
@@ -41,7 +37,6 @@
   background-color: rgba($color-burgundy-500, 0.04);
 }
 
-// Snackbar
 .mat-mdc-snack-bar-container {
   border-radius: $border-radius-md;
 }
@@ -64,7 +59,6 @@
   --mat-snack-bar-button-color: #{$color-white};
 }
 
-// Buttons
 .mat-mdc-button,
 .mat-mdc-raised-button,
 .mat-mdc-unelevated-button,
@@ -72,22 +66,18 @@
   border-radius: $border-radius-md;
 }
 
-// Dividers
 .mat-divider {
   border-top-color: $color-gray-200;
 }
 
-// Progress spinner
 .mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: #{$color-burgundy-600};
 }
 
-// Tooltips
 .mat-mdc-tooltip {
   font-size: $font-size-sm;
 }
 
-// Dialogs
 .mat-mdc-dialog-container {
   --mdc-dialog-container-shape: #{$border-radius-xl};
   --mat-dialog-container-shape: #{$border-radius-xl};
@@ -145,7 +135,6 @@
   }
 }
 
-// Task workflow chips
 .mat-mdc-chip.task-status-chip,
 .mat-mdc-chip.task-priority-chip,
 .mat-mdc-chip.task-due-date-chip {

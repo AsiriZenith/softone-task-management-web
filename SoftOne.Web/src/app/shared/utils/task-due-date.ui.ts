@@ -1,4 +1,4 @@
-import { formatTaskDueDate } from '../../core/utils/task.mapper';
+import { formatTaskDueDate, parseDateOnly } from '../../core/utils/task.mapper';
 import { TaskStatus, isTerminalTaskStatus } from '../enums/task-status.enum';
 
 export type TaskDueDateState =
@@ -24,8 +24,19 @@ const DUE_DATE_ICONS: Record<TaskDueDateState, string> = {
   muted: 'event_available',
 };
 
-function startOfDay(date: Date): number {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+function getDateOnlyKey(
+  dateOnly: NonNullable<ReturnType<typeof parseDateOnly>>
+): number {
+  return dateOnly.year * 10000 + dateOnly.month * 100 + dateOnly.day;
+}
+
+function getTodayDateOnlyKey(): number {
+  const today = new Date();
+  return (
+    today.getFullYear() * 10000 +
+    (today.getMonth() + 1) * 100 +
+    today.getDate()
+  );
 }
 
 export function getDueDateState(
@@ -40,13 +51,13 @@ export function getDueDateState(
     return 'none';
   }
 
-  const parsed = new Date(dueDate);
-  if (Number.isNaN(parsed.getTime())) {
+  const dateOnly = parseDateOnly(dueDate);
+  if (!dateOnly) {
     return 'upcoming';
   }
 
-  const dueDay = startOfDay(parsed);
-  const today = startOfDay(new Date());
+  const dueDay = getDateOnlyKey(dateOnly);
+  const today = getTodayDateOnlyKey();
 
   if (dueDay < today) {
     return 'overdue';

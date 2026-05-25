@@ -1,4 +1,3 @@
-/** Aligns with backend `SoftOne.Api.Data.Enums.Status` (JSON string names). */
 export enum TaskStatus {
   Todo = 'Todo',
   InProgress = 'InProgress',

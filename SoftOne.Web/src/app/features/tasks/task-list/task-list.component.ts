@@ -22,6 +22,7 @@ import { TaskItemComponent } from '../task-item/task-item.component';
 })
 export class TaskListComponent {
   readonly tasks = input<Task[]>([]);
+  readonly totalCount = input(0);
   readonly loading = input(false);
   readonly actionsDisabled = input(false);
   readonly hasActiveFilters = input(false);
@@ -44,6 +45,10 @@ export class TaskListComponent {
 
   readonly emptyIcon = computed(() =>
     this.hasActiveFilters() ? 'filter_alt_off' : 'inbox'
+  );
+
+  readonly displayTaskCount = computed(() =>
+    this.hasActiveFilters() ? this.tasks().length : this.totalCount()
   );
 
   readonly showCreateAction = computed(
